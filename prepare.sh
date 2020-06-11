@@ -3,11 +3,10 @@
 echo "##########################################"
 echo "###        Download dataset            ###"
 echo "##########################################"
-cd dataset
-chmod +x ./prepare_dataset.sh
-./prepare_dataset.sh
+chmod +x ./prepare_COCO2017.sh
+./prepare_COCO2017.sh
 cd ..
-: <<'END'
+
 echo "##########################################"
 echo "###        Mask_RCNN                   ###"
 echo "##########################################"
@@ -79,5 +78,3 @@ cd CRNN
 chmod +x ./prepare_dataset.sh
 ./prepare_dataset.sh
 cd ..
-
-END

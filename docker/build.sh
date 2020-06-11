@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo docker build -f Dockerfile.tensorflow -t odyssee/dl-benchmark:latest .
+sudo docker build --no-cache -f Dockerfile.tensorflow -t odyssee/dl-benchmark:latest .
