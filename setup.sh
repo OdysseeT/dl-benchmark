@@ -55,6 +55,7 @@ echo "##########################################"
 echo "###       Set up DIEN                  ###"
 echo "##########################################"
 cd DIEN
+chmod +x ./prepare_dataset.sh
 ./prepare_dataset.sh
 cd ..
 
@@ -62,6 +63,7 @@ echo "##########################################"
 echo "### Set up Faster_RCNN                 ###"
 echo "##########################################"
 cd Faster_RCNN
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -69,6 +71,7 @@ echo "##########################################"
 echo "### Set up WideDeep                    ###"
 echo "##########################################"
 cd WideDeep
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -76,6 +79,7 @@ echo "##########################################"
 echo "### Set up CPN                         ###"
 echo "##########################################"
 cd CPN
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -83,6 +87,7 @@ echo "##########################################"
 echo "### Set up SegLink                     ###"
 echo "##########################################"
 cd SegLink
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -90,5 +95,6 @@ echo "##########################################"
 echo "###   Set up CRNN                      ###"
 echo "##########################################"
 cd CRNN
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
