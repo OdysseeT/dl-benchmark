@@ -16,4 +16,4 @@ WORKDIR dl-benchmark
 
 RUN ./setup.sh
 
-ENTRYPOINT ["/bin/bash", "/workspace/dl-benchmark/run.sh"]
+ENTRYPOINT ["/bin/bash", "/workspace/dl-benchmark/prepare.sh"]
