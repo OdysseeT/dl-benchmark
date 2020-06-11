@@ -1,18 +1,13 @@
 #!/bin/bash
 
-apt-get update
-apt-get -y install software-properties-common
 add-apt-repository ppa:git-core/ppa
+apt-get update
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-apt-get install git-lfs
+apt-get -y install software-properties-common bc install git-lfs
 git lfs install
 
 pip3 install xlsxwriter
-if [ "`which apt`" == "/usr/bin/apt" ]; then
-  apt-get install bc
-elif [ "`which yum`" == "/usr/bin/yum" ]; then
-  yum install bc
-fi
+
 
 ##############################################################
 
@@ -23,6 +18,8 @@ cd CNN_Tensorflow
 ./setup.sh
 cd ..
 
+
+: <<'END'
 
 echo "##########################################"
 echo "###     Set up Mask_RCNN               ###"
@@ -37,7 +34,6 @@ echo "##########################################"
 cd DeepInterest
 ./setup.sh
 cd ..
-
 
 echo "##########################################"
 echo "###       Set up DSSD                  ###"
@@ -75,8 +71,24 @@ cd WideDeep
 cd ..
 
 echo "##########################################"
+echo "### Set up CPN                         ###"
+echo "##########################################"
+cd CPN
+./setup.sh
+cd ..
+
+echo "##########################################"
+echo "### Set up SegLink                     ###"
+echo "##########################################"
+cd SegLink
+./setup.sh
+cd ..
+
+echo "##########################################"
 echo "###   Set up CRNN                      ###"
 echo "##########################################"
 cd CRNN
 ./setup.sh
 cd ..
+
+END
