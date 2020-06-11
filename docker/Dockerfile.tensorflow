@@ -19,4 +19,5 @@ WORKDIR dl-benchmark
 RUN ["chmod", "+x", "./setup.sh"]
 RUN ["./setup.sh"]
 
-ENTRYPOINT ["/bin/bash", "/workspace/dl-benchmark/prepare.sh"]
+RUN ["chmod", "+x", "./prepare.sh"]
+ENTRYPOINT ["/bin/bash", "./prepare.sh"]
