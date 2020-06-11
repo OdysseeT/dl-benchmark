@@ -3,7 +3,7 @@
 add-apt-repository ppa:git-core/ppa
 apt-get update
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-apt-get -y install software-properties-common bc git-lfs
+apt-get -y install bc git-lfs
 git lfs install
 
 pip3 install xlsxwriter
@@ -25,14 +25,15 @@ cd Mask_RCNN
 ./setup.sh
 cd ..
 
-
-: <<'END'
 echo "##########################################"
 echo "###      Set up DeepInterest           ###"
 echo "##########################################"
 cd DeepInterest
 ./setup.sh
 cd ..
+
+
+: <<'END'
 
 echo "##########################################"
 echo "###       Set up DSSD                  ###"
