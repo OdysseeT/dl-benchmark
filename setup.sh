@@ -15,6 +15,7 @@ echo "##########################################"
 echo "###      Set up CNN_Tensorflow         ###"
 echo "##########################################"
 cd CNN_Tensorflow
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -22,6 +23,7 @@ echo "##########################################"
 echo "###     Set up Mask_RCNN               ###"
 echo "##########################################"
 cd Mask_RCNN
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -29,6 +31,7 @@ echo "##########################################"
 echo "###      Set up DeepInterest           ###"
 echo "##########################################"
 cd DeepInterest
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -36,6 +39,7 @@ echo "##########################################"
 echo "###       Set up DSSD                  ###"
 echo "##########################################"
 cd DSSD
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
@@ -43,6 +47,7 @@ echo "##########################################"
 echo "###       Set up NCF                   ###"
 echo "##########################################"
 cd NCF
+chmod +x ./setup.sh
 ./setup.sh
 cd ..
 
