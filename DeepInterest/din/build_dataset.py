@@ -3,7 +3,7 @@ import pickle
 
 random.seed(1234)
 
-with open('../raw_data/remap.pkl', 'rb') as f:
+with open('../../dataset/aws_reviews/remap.pkl', 'rb') as f:
   reviews_df = pickle.load(f)
   cate_list = pickle.load(f)
   user_count, item_count, cate_count, example_count = pickle.load(f)
