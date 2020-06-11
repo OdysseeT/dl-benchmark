@@ -1,16 +1,8 @@
 #!/bin/bash
 
-if [ "`which apt`" == "/usr/bin/apt" ]; then
-    apt-get update && apt-get install -y libsm6 libxext6
-    apt-get install -y libxrender-dev libxext-dev libsm-dev
-elif [ "`which yum`" == "/usr/bin/yum" ]; then
-    yum -y install libXext libSM libXrender
-else
-    echo "unknown OS"
-    exit
-fi
 
-
+apt-get update && apt-get install -y libsm6 libxext6
+apt-get install -y libxrender-dev libxext-dev libsm-dev
 
 pip3 install imgaug opencv-python keras==2.1.6 scikit-image cython
 apt-get install python3-tk
