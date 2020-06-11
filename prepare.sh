@@ -5,7 +5,6 @@ echo "###        Download dataset            ###"
 echo "##########################################"
 chmod +x ./prepare_COCO2017.sh
 ./prepare_COCO2017.sh
-cd ..
 
 echo "##########################################"
 echo "###        Mask_RCNN                   ###"
