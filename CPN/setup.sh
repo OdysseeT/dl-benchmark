@@ -8,5 +8,6 @@ cd lib
 make clean
 make all
 cd lib_kernel/lib_nms
+chmod +x ./compile.sh
 ./compile.sh
 cd ../../..
