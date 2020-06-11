@@ -3,7 +3,8 @@ FROM nvcr.io/nvidia/tensorflow:19.09-py3
 ARG DEBIAN_FRONTEND=noninteractive
 ENV CUDA_VISIBLE_DEVICES="0"
 
-RUN apt-get software-properties-common
+RUN apt-get update
+RUN apt-get install -y software-properties-common
 RUN add-apt-repository universe
 RUN add-apt-repository multiverse
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils git
