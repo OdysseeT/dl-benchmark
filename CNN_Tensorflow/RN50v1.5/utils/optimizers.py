@@ -17,9 +17,9 @@
 # limitations under the License.
 # ==============================================================================
 
+from __future__ import print_function
 
-
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 __all__ = ['FixedLossScalerOptimizer']
 

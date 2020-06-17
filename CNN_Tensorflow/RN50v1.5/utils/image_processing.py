@@ -17,7 +17,7 @@
 # limitations under the License.
 # ==============================================================================
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 _RESIZE_MIN = 256
 _DEFAULT_IMAGE_SIZE = 224

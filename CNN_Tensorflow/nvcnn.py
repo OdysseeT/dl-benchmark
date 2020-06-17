@@ -15,15 +15,15 @@
 # ==============================================================================
 
 
-
+from __future__ import print_function
 from builtins import range
 
 __version__ = "1.6"
 
-import numpy as np
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+import numpy as np
 import tensorflow as tf
 tf.get_logger().setLevel('ERROR')
 
@@ -564,11 +564,11 @@ def all_avg_gradients(tower_gradvars, devices, param_server_device='/gpu:0'):
         num_devices = len(tower_gradvars)
         avg_gradvars = []
         for layer in zip(*tower_gradvars):
-            grads_on_devices, vars_on_devices = list(zip(*layer))
+            grads_on_devices, vars_on_devices = zip(*layer)
             with tf.device(param_server_device):
                 avg_grad = tf.reduce_mean(tf.stack(grads_on_devices), 0)
             avg_grads_on_devices = [avg_grad]*num_devices
-            avg_gradvars_on_devices = list(zip(*(avg_grads_on_devices, vars_on_devices)))
+            avg_gradvars_on_devices = zip(*(avg_grads_on_devices, vars_on_devices))
             avg_gradvars.append(avg_gradvars_on_devices)
         return list(zip(*avg_gradvars))
 
@@ -1400,7 +1400,7 @@ def inference_resnext_v1(net, input_layer, nlayer):
     cardinality_to_bottleneck_width = { 1:64, 2:40, 4:24, 8:14, 32:4 }
     net.cardinality = 32
     net.shortcut_type = 'B'
-    assert net.cardinality in list(cardinality_to_bottleneck_width.keys()), \
+    assert net.cardinality in cardinality_to_bottleneck_width.keys(), \
     "Invalid  cardinality (%i); must be one of: 1,2,4,8,32" % net.cardinality
     net.bottleneck_width = cardinality_to_bottleneck_width[net.cardinality]
     if nlayer ==  50: return inference_resnext_v1_impl(net, input_layer, [3,4, 6,3])

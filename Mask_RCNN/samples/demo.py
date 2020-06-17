@@ -43,7 +43,7 @@ if not os.path.exists(COCO_MODEL_PATH):
 
 # Directory of images to run detection on
 IMAGE_DIR = os.path.join(ROOT_DIR, "images")
-print(("=======images=", IMAGE_DIR))
+print("=======images=", IMAGE_DIR)
 
 batch_size = args.batch_size 
 
@@ -85,10 +85,10 @@ file_names = next(os.walk(IMAGE_DIR))[2]
 
 time_s = time.time()
 for i in range(len(file_names)):
-    print(("Process image ", i))
+    print ("Process image ", i)
     image = skimage.io.imread(os.path.join(IMAGE_DIR, file_names[i]))
     image_s=[image for n in range(batch_size)]
 # Run detection
     results = model.detect(image_s, verbose=1)
-print(("Total running time =", time.time()-time_s, "s"))
+print("Total running time =", time.time()-time_s, "s")
     

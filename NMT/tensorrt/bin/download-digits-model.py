@@ -21,10 +21,10 @@ class ModelDownloader(object):
             r.raise_for_status()
             return r.content
         except requests.exceptions.ConnectionError as e:
-            print('Failed to connect to server at %s:%s' % (self.hostname, self.port))
+            print 'Failed to connect to server at %s:%s' % (self.hostname, self.port)
         except requests.exceptions.RequestException as e:
-            print('Error loading "%s"' % url)
-            print('\t', e.message)
+            print 'Error loading "%s"' % url
+            print '\t', e.message
         sys.exit(1)
 
     def get_job_id(self):
@@ -36,24 +36,24 @@ class ModelDownloader(object):
         if not len(models):
             raise Exception('No models exist on this server!')
         fmt = '[%3s] %-20s %-10s %-20s'
-        print(fmt % ('Num', 'Job ID', 'Status', 'Name'))
-        print('-' * len(fmt % ('a', 'a', 'a', 'a')))
+        print fmt % ('Num', 'Job ID', 'Status', 'Name')
+        print '-' * len(fmt % ('a', 'a', 'a', 'a'))
         for i, model in enumerate(models):
-            print(fmt % (i+1, model['id'], model['status'], model['name']))
+            print fmt % (i+1, model['id'], model['status'], model['name'])
 
         selected = None
         while selected is None:
-            print('Select a job')
-            x = input('>>> ')
+            print 'Select a job'
+            x = raw_input('>>> ')
             try:
                 x = int(x)-1
                 if 0 <= x < len(models):
                     selected = x
                 else:
-                    print('Out of range')
+                    print 'Out of range'
             except ValueError as e:
-                print(e)
-        print()
+                print e
+        print
 
         return models[selected]['id']
 
@@ -66,16 +66,16 @@ class ModelDownloader(object):
         if not len(snapshots):
             raise Exception('No snapshots exist for this job!')
         fmt = '[%3s] %-10s'
-        print(fmt % ('Num', 'Epoch'))
-        print('-' * len(fmt % ('a', 'a')))
+        print fmt % ('Num', 'Epoch')
+        print '-' * len(fmt % ('a', 'a'))
         for i, epoch in enumerate(snapshots):
-            print(fmt % (i+1, epoch))
+            print fmt % (i+1, epoch)
 
         selected = None
         default = len(snapshots)
         while selected is None:
-            print('Select a snapshot (leave blank for default=%s)' % default)
-            x = input('>>> ')
+            print 'Select a snapshot (leave blank for default=%s)' % default
+            x = raw_input('>>> ')
             if not x.strip():
                 selected = default - 1
             else:
@@ -84,10 +84,10 @@ class ModelDownloader(object):
                     if 0 <= x < len(snapshots):
                         selected = x
                     else:
-                        print('Out of range')
+                        print 'Out of range'
                 except ValueError as e:
-                    print(e)
-        print()
+                    print e
+        print
 
         epoch = snapshots[selected]
         return epoch
@@ -101,7 +101,7 @@ class ModelDownloader(object):
         url = 'http://%s:%s/models/%s/download%s?epoch=%s' % (self.hostname, self.port, job_id, extension, snapshot_epoch)
         content = self.get_url(url)
 
-        print('Saving to %s' % output_file)
+        print 'Saving to %s' % output_file
         with open(output_file, 'wb') as outfile:
             outfile.write(content)
 
@@ -131,5 +131,5 @@ if __name__ == '__main__':
     snapshot_epoch = downloader.get_snapshot_epoch(job_id)
     downloader.download_model(args['output_file'], job_id, snapshot_epoch)
 
-    print('Done.')
+    print 'Done.'
 

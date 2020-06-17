@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+from __future__ import print_function
 
 import os
 import multiprocessing
 import warnings
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 import horovod.tensorflow as hvd
 
@@ -184,7 +184,7 @@ class Runner(object):
             if not isinstance(_hparams, tf.contrib.training.HParams):
                 raise ValueError("Non valid HParams argument object detected:", _hparams)
 
-            for key, val in list(_hparams.values()).items():
+            for key, val in _hparams.values().items():
                 try:
                     hparams.add_hparam(name=key, value=val)
 

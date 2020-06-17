@@ -14,7 +14,7 @@
 # ==============================================================================
 
 """TensorFlow NMT model implementation."""
-
+from __future__ import print_function
 
 import argparse
 import os
@@ -23,7 +23,7 @@ import sys
 
 # import matplotlib.image as mpimg
 import numpy as np
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 from . import inference
 from . import train
@@ -570,15 +570,15 @@ def ensure_compatible_hparams(hparams, default_hparams, hparams_path=""):
 
   # For compatible reason, if there are new fields in default_hparams,
   #   we add them to the current hparams
-  default_config = list(default_hparams.values())
-  config = list(hparams.values())
+  default_config = default_hparams.values()
+  config = hparams.values()
   for key in default_config:
     if key not in config:
       hparams.add_hparam(key, default_config[key])
 
   # Update all hparams' keys if override_loaded_hparams=True
   if getattr(default_hparams, "override_loaded_hparams", None):
-    overwritten_keys = list(default_config.keys())
+    overwritten_keys = default_config.keys()
   else:
     # For inference
     overwritten_keys = INFERENCE_KEYS

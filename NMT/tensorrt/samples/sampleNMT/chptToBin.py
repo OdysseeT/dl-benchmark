@@ -1,4 +1,4 @@
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 import numpy as np
 import os
 import sys
@@ -29,7 +29,7 @@ def chpt_to_dict_arrays_simple(file_name):
         variables = tf.trainable_variables()
         for v in variables:
             params[v.name] = v.eval(session=sess)
-            print(("{0}    {1}".format(v.name, params[v.name].shape)))
+            print ("{0}    {1}".format(v.name, params[v.name].shape))
 
     #use default value
     params["forget_bias"] = 1.0
@@ -81,7 +81,7 @@ def chpt_to_dict_arrays():
         variables = tf.trainable_variables()
         for v in variables:
             params[v.name] = v.eval(session=sess)
-            print(("{0}    {1}".format(v.name, params[v.name].shape)))
+            print ("{0}    {1}".format(v.name, params[v.name].shape))
 
     params["forget_bias"] = hparams.forget_bias
     return params
@@ -89,9 +89,9 @@ def chpt_to_dict_arrays():
 def concatenate_layers(params):
     """Concatenate weights from multiple layers"""
 
-    input_dict_size = params['embeddings/encoder/embedding_encoder:0'].shape[0]
-    output_dict_size = params['embeddings/decoder/embedding_decoder:0'].shape[0]
-    print(('Input dictionary size: {0}, Output dictionary size: {1}'.format(input_dict_size, output_dict_size)))
+    input_dict_size = params[u'embeddings/encoder/embedding_encoder:0'].shape[0]
+    output_dict_size = params[u'embeddings/decoder/embedding_decoder:0'].shape[0]
+    print('Input dictionary size: {0}, Output dictionary size: {1}'.format(input_dict_size, output_dict_size))
 
     layers = 0
     encoder_type = "unidirectional"
@@ -103,19 +103,19 @@ def concatenate_layers(params):
 
     # we have encoder, decoder, kernel and bias
     layers = int(layers / 4)
-    print(('Layers: {0}, Encoder type: {1}'.format(layers, encoder_type)))
+    print('Layers: {0}, Encoder type: {1}'.format(layers, encoder_type))
 
     data = {}
-    encoder_postfix = '/basic_lstm_cell/'
-    kernel_alias = 'kernel:0'
-    bias_alias = 'bias:0'
+    encoder_postfix = u'/basic_lstm_cell/'
+    kernel_alias = u'kernel:0'
+    bias_alias = u'bias:0'
     # weights, concatenate all layers
     #process encoder
     if encoder_type == 'bidirectional':
         bi_layers = int(layers / 2)
         if bi_layers == 1:
-            bifw_encoder_prefix = 'dynamic_seq2seq/encoder/bidirectional_rnn/fw/basic_lstm_cell/'
-            bibw_encoder_prefix = 'dynamic_seq2seq/encoder/bidirectional_rnn/bw/basic_lstm_cell/'
+            bifw_encoder_prefix = u'dynamic_seq2seq/encoder/bidirectional_rnn/fw/basic_lstm_cell/'
+            bibw_encoder_prefix = u'dynamic_seq2seq/encoder/bidirectional_rnn/bw/basic_lstm_cell/'
             data["encrnnkernel"] = params[bifw_encoder_prefix + kernel_alias] 
             tmp_weights = params[bibw_encoder_prefix + kernel_alias]
             data["encrnnkernel"] = np.concatenate((data["encrnnkernel"], tmp_weights), axis=0)
@@ -124,8 +124,8 @@ def concatenate_layers(params):
             tmp_weights = params[bibw_encoder_prefix + bias_alias]
             data["encrnnbias"] = np.concatenate((data["encrnnbias"], tmp_weights), axis=0)
         else:
-            bifw_encoder_prefix = 'dynamic_seq2seq/encoder/bidirectional_rnn/fw/multi_rnn_cell/cell_'
-            bibw_encoder_prefix = 'dynamic_seq2seq/encoder/bidirectional_rnn/bw/multi_rnn_cell/cell_'
+            bifw_encoder_prefix = u'dynamic_seq2seq/encoder/bidirectional_rnn/fw/multi_rnn_cell/cell_'
+            bibw_encoder_prefix = u'dynamic_seq2seq/encoder/bidirectional_rnn/bw/multi_rnn_cell/cell_'
 
             data["encrnnkernel"] = np.concatenate(tuple(params[bifw_encoder_prefix + str(i) \
                                                     + encoder_postfix + kernel_alias] \
@@ -143,7 +143,7 @@ def concatenate_layers(params):
                                         for i in range(bi_layers)), axis=0)
             data["encrnnbias"] = np.concatenate((data["encrnnbias"], tmp_weights), axis=0)
     else:
-        uni_encoder_prefix = 'dynamic_seq2seq/encoder/rnn/multi_rnn_cell/cell_'
+        uni_encoder_prefix = u'dynamic_seq2seq/encoder/rnn/multi_rnn_cell/cell_'
         data["encrnnkernel"] = np.concatenate(tuple(params[uni_encoder_prefix + str(i) \
                                                 + encoder_postfix + kernel_alias] \
                                                 for i in range(layers)), axis=0)
@@ -151,15 +151,15 @@ def concatenate_layers(params):
                                             + encoder_postfix + bias_alias] \
                                             for i in range(layers)), axis=0)
 
-    data["encembed"] = params['embeddings/encoder/embedding_encoder:0']
+    data["encembed"] = params[u'embeddings/encoder/embedding_encoder:0']
 
     #process decoder
-    data["decembed"] = params['embeddings/decoder/embedding_decoder:0']
-    data["decmemkernel"] = params['dynamic_seq2seq/decoder/memory_layer/kernel:0']
-    data["decattkernel"] = params['dynamic_seq2seq/decoder/attention/attention_layer/kernel:0']
-    data["decprojkernel"] = params['dynamic_seq2seq/decoder/output_projection/kernel:0']
+    data["decembed"] = params[u'embeddings/decoder/embedding_decoder:0']
+    data["decmemkernel"] = params[u'dynamic_seq2seq/decoder/memory_layer/kernel:0']
+    data["decattkernel"] = params[u'dynamic_seq2seq/decoder/attention/attention_layer/kernel:0']
+    data["decprojkernel"] = params[u'dynamic_seq2seq/decoder/output_projection/kernel:0']
 
-    uni_decoder_prefix = 'dynamic_seq2seq/decoder/attention/multi_rnn_cell/cell_'
+    uni_decoder_prefix = u'dynamic_seq2seq/decoder/attention/multi_rnn_cell/cell_'
     data["decrnnkernel"] = np.concatenate(tuple(params[uni_decoder_prefix + str(i) \
                                             + encoder_postfix + kernel_alias] \
                                             for i in range(layers)), axis=0)
@@ -168,7 +168,7 @@ def concatenate_layers(params):
                                         for i in range(layers)), axis=0)
 
     for key in data:
-        print(("{0} shape: {1}".format(key, data[key].shape)))
+        print("{0} shape: {1}".format(key, data[key].shape))
 
     num_units = int(data["decrnnkernel"].shape[1] / 4)
     encoder_type_int = 1 if encoder_type == 'bidirectional' else 0
@@ -209,7 +209,7 @@ def convert_rnn_kernel(weights, dimensions, is_decoder_rnn = False):
     Need to convert 'ijfo' to 'fijo'
     """
 
-    print(("Starting shape: {0}".format(weights.shape)))
+    print("Starting shape: {0}".format(weights.shape))
 
     num_units = dimensions["num_units"]
     layers = dimensions["layers"]
@@ -223,11 +223,11 @@ def convert_rnn_kernel(weights, dimensions, is_decoder_rnn = False):
         # case encoder
         # (layers * 2 * input_size, 4 * num_units) -> (layers, 2, input_size, 4, num_units))
         weights = np.reshape(weights, (layers, 2, input_size, 4, num_units))
-        print(("After reshape: {0}".format(weights.shape)))
+        print("After reshape: {0}".format(weights.shape))
 
         # reorder/transpose axis to match TensorRT format (layers, 2, 4, num_units, input_size) 
         weights = np.moveaxis(weights, [2, 3, 4], [4, 2, 3])
-        print(("After moveaxis: {0}".format(weights.shape)))
+        print("After moveaxis: {0}".format(weights.shape))
 
         # then we reorder gates from Tensorflow's 'icfo' into TensorRT's 'fico' order
         input_perm = [ 1, 2, 0, 3 ]
@@ -288,7 +288,7 @@ def convert_rnn_bias(weights, dimensions, forget_bias = 1.0):
     for i in range(4):
         temp_weights[:, input_perm[i], :] = weights[:, i, :]
     #  Add a value to f bias to be consistent with the Tensorflow model.
-    print(("Adding {0} to forget bias".format(forget_bias)))
+    print("Adding {0} to forget bias".format(forget_bias))
     temp_weights[:, 0, :] = np.add(temp_weights[:, 0, :], forget_bias)
     weights = deepcopy(temp_weights)
 
@@ -343,8 +343,8 @@ def main(_):
 
     if len(sys.argv) < 3:
         print ('\nUsage:')
-        print(('python {0} <NMT inference parameters> --weightsdir=<case_name_dir>'.format(sys.argv[0])))
-        print(("""e.g. \npython {0} --src=en --tgt=vi \\
+        print ('python {0} <NMT inference parameters> --weightsdir=<case_name_dir>'.format(sys.argv[0]))
+        print ("""e.g. \npython {0} --src=en --tgt=vi \\
     --ckpt=/path/to/envi_model/translate.ckpt \\
     --hparams_path=nmt/standard_hparams/iwslt15.json \\ 
     --out_dir=/tmp/envi \\
@@ -352,10 +352,10 @@ def main(_):
     --inference_input_file=/tmp/nmt_data/tst2013.en \\
     --inference_output_file=/tmp/envi/output_infer \\
     --inference_ref_file=/tmp/nmt_data/tst2013.vi \\
-    --weightsdir=envi""".format(sys.argv[0])))
+    --weightsdir=envi""".format(sys.argv[0]))
         print ('\nOR\n')
-        print(('python {0} --metafile=</path_to/graph.meta> --weightsdir=<case_name_dir> '.format(sys.argv[0])))
-        print(('e.g.\npython {0} --metafile=./translate.ckpt-12000.meta --weightsdir=envi'.format(sys.argv[0])))
+        print ('python {0} --metafile=</path_to/graph.meta> --weightsdir=<case_name_dir> '.format(sys.argv[0]))
+        print ('e.g.\npython {0} --metafile=./translate.ckpt-12000.meta --weightsdir=envi'.format(sys.argv[0]))
         sys.exit()
 
     nmt_parser = argparse.ArgumentParser()
@@ -386,7 +386,7 @@ def main(_):
         os.mkdir(case_dir)
     case_dir = case_dir + "/"
 
-    trt_string = 'trtsamplenmt'
+    trt_string = u'trtsamplenmt'
     # save embed weights
     save_layer_weights(data, ["encembed"], \
                         [ dimensions["encembed_outputs"], \

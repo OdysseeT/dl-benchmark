@@ -1,0 +1,11 @@
+*.so
+*.ipynb
+log_*
+results*
+__pycache__
+ckpt_*
+Mask_RCNN/coco_dataset/
+NMT/ende_gnmt_model_4_layer/
+NMT/dataset/
+NCF/Data/
+NCF/graphs/

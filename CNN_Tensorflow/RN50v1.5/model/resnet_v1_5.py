@@ -16,9 +16,9 @@
 # limitations under the License.
 
 
+from __future__ import print_function
 
-
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 import horovod.tensorflow as hvd
 
@@ -102,28 +102,28 @@ class ResnetModel(object):
 
         if mode == tf.estimator.ModeKeys.TRAIN:
 
-            if "batch_size" not in list(params.keys()):
+            if "batch_size" not in params.keys():
                 raise RuntimeError("Parameter `batch_size` is missing...")
 
-            if "lr_init" not in list(params.keys()):
+            if "lr_init" not in params.keys():
                 raise RuntimeError("Parameter `lr_init` is missing...")
 
-            if "num_gpus" not in list(params.keys()):
+            if "num_gpus" not in params.keys():
                 raise RuntimeError("Parameter `num_gpus` is missing...")
 
-            if "steps_per_epoch" not in list(params.keys()):
+            if "steps_per_epoch" not in params.keys():
                 raise RuntimeError("Parameter `steps_per_epoch` is missing...")
 
-            if "momentum" not in list(params.keys()):
+            if "momentum" not in params.keys():
                 raise RuntimeError("Parameter `momentum` is missing...")
 
-            if "weight_decay" not in list(params.keys()):
+            if "weight_decay" not in params.keys():
                 raise RuntimeError("Parameter `weight_decay` is missing...")
 
-            if "loss_scale" not in list(params.keys()):
+            if "loss_scale" not in params.keys():
                 raise RuntimeError("Parameter `loss_scale` is missing...")
             
-            if "label_smoothing" not in list(params.keys()):
+            if "label_smoothing" not in params.keys():
                 raise RuntimeError("Parameter `label_smoothing` is missing...")
                 
         if mode == tf.estimator.ModeKeys.TRAIN and not self.model_hparams.use_dali:

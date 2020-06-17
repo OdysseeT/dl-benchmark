@@ -7,19 +7,12 @@ Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
 
-import warnings
-warnings.simplefilter(action='ignore', category=FutureWarning)
-
 import sys
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
 import math
 import random
 import numpy as np
 import tensorflow as tf
-tf.get_logger().setLevel('ERROR')
-
 import scipy
 import skimage.color
 import skimage.io
@@ -769,7 +762,7 @@ def compute_ap_range(gt_box, gt_class_id, gt_mask,
     """Compute AP over a range or IoU thresholds. Default range is 0.5-0.95."""
     # Default is 0.5 to 0.95 with increments of 0.05
     iou_thresholds = iou_thresholds or np.arange(0.5, 1.0, 0.05)
-
+    
     # Compute AP over range of IoU thresholds
     AP = []
     for iou_threshold in iou_thresholds:
@@ -778,12 +771,12 @@ def compute_ap_range(gt_box, gt_class_id, gt_mask,
                         pred_box, pred_class_id, pred_score, pred_mask,
                         iou_threshold=iou_threshold)
         if verbose:
-            print(("AP @{:.2f}:\t {:.3f}".format(iou_threshold, ap)))
+            print("AP @{:.2f}:\t {:.3f}".format(iou_threshold, ap))
         AP.append(ap)
     AP = np.array(AP).mean()
     if verbose:
-        print(("AP @{:.2f}-{:.2f}:\t {:.3f}".format(
-            iou_thresholds[0], iou_thresholds[-1], AP)))
+        print("AP @{:.2f}-{:.2f}:\t {:.3f}".format(
+            iou_thresholds[0], iou_thresholds[-1], AP))
     return AP
 
 
@@ -855,7 +848,7 @@ def download_trained_weights(coco_model_path, verbose=1):
     coco_model_path: local path of COCO trained weights
     """
     if verbose > 0:
-        print(("Downloading pretrained model to " + coco_model_path + " ..."))
+        print("Downloading pretrained model to " + coco_model_path + " ...")
     with urllib.request.urlopen(COCO_MODEL_URL) as resp, open(coco_model_path, 'wb') as out:
         shutil.copyfileobj(resp, out)
     if verbose > 0:

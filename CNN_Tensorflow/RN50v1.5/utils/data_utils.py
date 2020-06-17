@@ -17,7 +17,7 @@
 
 import sys
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 import horovod.tensorflow as hvd
 
 from utils import image_processing

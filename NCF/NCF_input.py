@@ -1,14 +1,12 @@
-
-
-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 import os, sys, json
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-import numpy as np
-import pandas as pd
-import tensorflow as tf
-tf.get_logger().setLevel('ERROR')
+import numpy as np 
+import pandas as pd 
+import tensorflow as tf 
 
 #DATA_DIR = '/data/weiwei/NCF-guoyang9/ml-1m/ratings.dat' # raw data
 DATA_PATH = './Data' # for saving the processed data
@@ -33,15 +31,15 @@ def load_data(negative_num):
 		test_labels=[]
 		user_bought=[]
 		user_negative=[]
-		return ((train_features, train_labels),
-			(test_features, test_labels),
+		return ((train_features, train_labels), 
+			(test_features, test_labels), 
 			(6040, 3706),  #user size =6040, item_size=3706
 			(user_bought, user_negative))
 
 	full_data = pd.read_csv(
-		DATA_DIR, sep='::', header=None, names=COLUMN_NAMES,
+		DATA_DIR, sep='::', header=None, names=COLUMN_NAMES, 
 		usecols=[0,1], dtype={0: np.int32, 1: np.int32}, engine='python')
-
+	
 	#forcing the index begining from 0.
 	full_data.user = full_data.user - 1
 	user_set = set(full_data.user.unique())
@@ -51,7 +49,7 @@ def load_data(negative_num):
 	item_size = len(item_set)
 	print('user size %d' %user_size)
 	print('item size %d' %item_size)
-
+	
 
 
 	item_map = re_index(item_set)
@@ -78,7 +76,7 @@ def load_data(negative_num):
 
 	#splitting the full set into train and test sets.
 	user_length = full_data.groupby('user').size().tolist() #user transaction count.
-	split_train_test = []
+	split_train_test = [] 
 
 	for i in range(len(user_set)):
 		for _ in range(user_length[i] - 1):
@@ -98,9 +96,9 @@ def load_data(negative_num):
 	test_features = test_data
 	test_labels = test_data['item'].tolist() #take the groundtruth item as test labels.
 
-	return ((train_features, train_labels),
-			(test_features, test_labels),
-			(user_size, item_size),
+	return ((train_features, train_labels), 
+			(test_features, test_labels), 
+			(user_size, item_size), 
 			(user_bought, user_negative))
 
 def add_negative(features, user_negative, labels, numbers, is_training):
@@ -116,7 +114,7 @@ def add_negative(features, user_negative, labels, numbers, is_training):
 		labels_add.append(label)
 
 		#uniformly sample negative ones from candidate negative items
-		neg_samples = np.random.choice(user_negative[user], size=numbers,
+		neg_samples = np.random.choice(user_negative[user], size=numbers, 
 								replace=False).tolist()
 
 		if is_training:
@@ -140,14 +138,14 @@ def dump_data(features, labels, user_negative, num_neg, is_training):
 	if not os.path.exists(DATA_PATH):
 		os.makedirs(DATA_PATH)
 
-	features, labels = add_negative(features, user_negative,
+	features, labels = add_negative(features, user_negative, 
 						labels, num_neg, is_training)
 
 	print ('feature size=', len(features), ', is training sample', is_training)
 
-	data_dict = dict([('user', features['user']),
+	data_dict = dict([('user', features['user']), 
 				('item', features['item']), ('label', labels)])
-
+				
 	if is_training:
 		np.save(os.path.join(DATA_PATH, 'train_data.npy'), data_dict)
 	else:
@@ -158,7 +156,7 @@ def train_input_fn(features, labels, batch_size, user_negative, num_neg):
 	data_path = os.path.join(DATA_PATH, 'train_data.npy')
 	if not os.path.exists(data_path):
 		dump_data(features, labels, user_negative, num_neg, True)
-
+	 
 	data = np.load(data_path).item()
 	print("Loading training data finished!")
 	print("Data size=", len(data['user']))
@@ -172,12 +170,12 @@ def eval_input_fn(features, labels, batch_size, user_negative, test_neg):
 	data_path = os.path.join(DATA_PATH, 'test_data.npy')
 	if not os.path.exists(data_path):
 		dump_data(features, labels, user_negative, test_neg, False)
-
+	
 	data = np.load(data_path).item()
 	print("Loading testing data finished!")
 	print("Data size=", len(data['user']) )
 	dataset = tf.data.Dataset.from_tensor_slices(data)
-	dataset = dataset.batch(test_neg+1)
+	dataset = dataset.batch(test_neg+1) 
 	# TODO
 	#dataset = dataset.batch(batch_size)
 

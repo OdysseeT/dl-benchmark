@@ -173,15 +173,15 @@ class CocoDataset(utils.Dataset):
         # Download images if not available locally
         if not os.path.exists(imgDir):
             os.makedirs(imgDir)
-            print(("Downloading images to " + imgZipFile + " ..."))
+            print("Downloading images to " + imgZipFile + " ...")
             with urllib.request.urlopen(imgURL) as resp, open(imgZipFile, 'wb') as out:
                 shutil.copyfileobj(resp, out)
             print("... done downloading.")
-            print(("Unzipping " + imgZipFile))
+            print("Unzipping " + imgZipFile)
             with zipfile.ZipFile(imgZipFile, "r") as zip_ref:
                 zip_ref.extractall(dataDir)
             print("... done unzipping")
-        print(("Will use images in " + imgDir))
+        print("Will use images in " + imgDir)
 
         # Setup annotations data paths
         annDir = "{}/annotations".format(dataDir)
@@ -207,15 +207,15 @@ class CocoDataset(utils.Dataset):
             os.makedirs(annDir)
         if not os.path.exists(annFile):
             if not os.path.exists(annZipFile):
-                print(("Downloading zipped annotations to " + annZipFile + " ..."))
+                print("Downloading zipped annotations to " + annZipFile + " ...")
                 with urllib.request.urlopen(annURL) as resp, open(annZipFile, 'wb') as out:
                     shutil.copyfileobj(resp, out)
                 print("... done downloading.")
-            print(("Unzipping " + annZipFile))
+            print("Unzipping " + annZipFile)
             with zipfile.ZipFile(annZipFile, "r") as zip_ref:
                 zip_ref.extractall(unZipDir)
             print("... done unzipping")
-        print(("Will use annotations in " + annFile))
+        print("Will use annotations in " + annFile)
 
     def load_mask(self, image_id):
         """Load instance masks for the given image.
@@ -388,12 +388,12 @@ def evaluate_coco(model, dataset, coco, eval_type="bbox", limit=0, image_ids=Non
     cocoEval.accumulate()
     cocoEval.summarize()
 
-    print(("Prediction time: {}. Average {}/image".format(
-        t_prediction, t_prediction / len(image_ids))))
-    print(("Total number of images: ", len(image_ids)))
-    print(("Total time: ", time.time() - t_start))
-    print(("Approximate accelerator time in seconds: %.3f" % keras_time))
-    print(("Approximate accelerator performance in images/s: %.3f" % (len(image_ids)/keras_time)))
+    print("Prediction time: {}. Average {}/image".format(
+        t_prediction, t_prediction / len(image_ids)))
+    print("Total number of images: ", len(image_ids))
+    print("Total time: ", time.time() - t_start)
+    print("Approximate accelerator time in seconds: %.3f" % keras_time)
+    print("Approximate accelerator performance in images/s: %.3f" % (len(image_ids)/keras_time))
 
 
 ############################################################
@@ -438,12 +438,12 @@ if __name__ == '__main__':
                         metavar="<number of accelerators>",
                         help='Number of accelerators used to train (default=1)')
     args = parser.parse_args()
-    print(("Command: ", args.command))
-    print(("Model: ", args.model))
-    print(("Dataset: ", args.dataset))
-    print(("Year: ", args.year))
-    print(("Logs: ", args.logs))
-    print(("Auto Download: ", args.download))
+    print("Command: ", args.command)
+    print("Model: ", args.model)
+    print("Dataset: ", args.dataset)
+    print("Year: ", args.year)
+    print("Logs: ", args.logs)
+    print("Auto Download: ", args.download)
 
     # Configurations
     if args.command == "train":
@@ -481,7 +481,7 @@ if __name__ == '__main__':
         model_path = args.model
 
     # Load weights
-    print(("Loading weights ", model_path))
+    print("Loading weights ", model_path)
     model.load_weights(model_path, by_name=True)
 
     # Train or evaluate
@@ -490,12 +490,12 @@ if __name__ == '__main__':
         # validation set, as as in the Mask RCNN paper.
         dataset_train = CocoDataset()
         dataset_train.load_coco(args.dataset, "train", year=args.year, auto_download=args.download)
-        dataset_train.load_coco(args.dataset, "val", year=args.year, auto_download=args.download)
+        dataset_train.load_coco(args.dataset, "valminusminival", year=args.year, auto_download=args.download)
         dataset_train.prepare()
 
         # Validation dataset
         dataset_val = CocoDataset()
-        dataset_val.load_coco(args.dataset, "val", year=args.year, auto_download=args.download)
+        dataset_val.load_coco(args.dataset, "minival", year=args.year, auto_download=args.download)
         dataset_val.prepare()
 
         # Image Augmentation
@@ -536,9 +536,9 @@ if __name__ == '__main__':
         total_time = t_end - t_start
         total_images = 3 * float(config.STEPS_PER_EPOCH) * float(config.BATCH_SIZE)
         system_performance = float(total_images)/float(total_time)
-        print(("Total number of images trained: ", total_images))
-        print(("Approximate accelerator time in seconds: %.3f" % total_time))
-        print(("Approximate accelerator performance in images/s: %.3f" % system_performance))
+        print("Total number of images trained: ", total_images)
+        print("Approximate accelerator time in seconds: %.3f" % total_time)
+        print("Approximate accelerator performance in images/s: %.3f" % system_performance)
 
 
     elif args.command == "evaluate":
@@ -546,8 +546,8 @@ if __name__ == '__main__':
         dataset_val = CocoDataset()
         coco = dataset_val.load_coco(args.dataset, "minival", year=args.year, return_coco=True, auto_download=args.download)
         dataset_val.prepare()
-        print(("Running COCO evaluation on {} images.".format(args.limit)))
+        print("Running COCO evaluation on {} images.".format(args.limit))
         evaluate_coco(model, dataset_val, coco, "bbox", limit=int(args.limit))
     else:
-        print(("'{}' is not recognized. "
-              "Use 'train' or 'evaluate'".format(args.command)))
+        print("'{}' is not recognized. "
+              "Use 'train' or 'evaluate'".format(args.command))

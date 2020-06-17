@@ -274,7 +274,7 @@ def parse_cmdline():
     if len(unknown_args) > 0:
 
         for bad_arg in unknown_args:
-            print(("ERROR: Unknown command line arg: %s" % bad_arg))
+            print("ERROR: Unknown command line arg: %s" % bad_arg)
 
         raise ValueError("Invalid command line arg(s)")
 

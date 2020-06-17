@@ -18,7 +18,7 @@
 import time
 
 import numpy as np
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 import dllogger.logger as dllg
 from dllogger.logger import LOGGER

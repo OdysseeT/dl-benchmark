@@ -14,15 +14,15 @@
 # ==============================================================================
 
 """Basic sequence-to-sequence model with dynamic RNN support."""
-
-
-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 import abc
 import collections
 import numpy as np
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 from . import model_helper
 from .utils import iterator_utils
@@ -218,7 +218,7 @@ class BaseModel(object):
       self.grad_norm = grad_norm
 
       self.update = opt.apply_gradients(
-          list(zip(clipped_grads, params)), global_step=self.global_step)
+          zip(clipped_grads, params), global_step=self.global_step)
 
       # Summary
       self.train_summary = self._get_train_summary()

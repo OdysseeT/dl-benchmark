@@ -20,7 +20,7 @@ import os
 import warnings
 warnings.simplefilter("ignore")
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 import horovod.tensorflow as hvd
 from utils import hvd_utils

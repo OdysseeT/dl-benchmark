@@ -12,19 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+from __future__ import print_function
 
 import os
 import math
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 __all__ = ['count_steps', 'list_filenames_in_dataset', 'parse_tfrecords_dataset']
 
 
 def count_steps(iter_unit, num_samples, num_iter, global_batch_size):
     
-    num_samples, num_iter = list(map(float, (num_samples, num_iter)))
+    num_samples, num_iter = map(float, (num_samples, num_iter))
     if iter_unit not in ["batch", "epoch"]:
         raise ValueError("Invalid `iter_unit` value: %s" % iter_unit)
 

@@ -6,10 +6,8 @@ Copyright (c) 2017 Matterport, Inc.
 Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
-import warnings
-warnings.simplefilter(action='ignore', category=FutureWarning)
+
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import random
 import datetime
 import re
@@ -19,10 +17,7 @@ from collections import OrderedDict
 import multiprocessing
 import numpy as np
 import skimage.transform
-
 import tensorflow as tf
-tf.get_logger().setLevel('ERROR')
-
 import keras
 import keras.backend as K
 import keras.layers as KL
@@ -76,7 +71,7 @@ class BatchNorm(KL.BatchNormalization):
 
 def compute_backbone_shapes(config, image_shape):
     """Computes the width and height of each stage of the backbone network.
-
+    
     Returns:
         [N, (height, width)]. Where N is the number of stages
     """
@@ -807,7 +802,7 @@ class DetectionLayer(KE.Layer):
         m = parse_image_meta_graph(image_meta)
         image_shape = m['image_shape'][0]
         window = norm_boxes_graph(m['window'], image_shape[:2])
-
+        
         # Run detection refinement graph on each item in the batch
         detections_batch = utils.batch_slice(
             [rois, mrcnn_class, mrcnn_bbox, window],
@@ -2024,7 +2019,7 @@ class MaskRCNN():
                                      train_bn=config.TRAIN_BN)
 
             # Detections
-            # output is [batch, num_detections, (y1, x1, y2, x2, class_id, score)] in
+            # output is [batch, num_detections, (y1, x1, y2, x2, class_id, score)] in 
             # normalized coordinates
             detections = DetectionLayer(config, name="mrcnn_detection")(
                 [rpn_rois, mrcnn_class, mrcnn_bbox, input_image_meta])
@@ -2059,7 +2054,7 @@ class MaskRCNN():
         # Get directory names. Each directory corresponds to a model
         dir_names = next(os.walk(self.model_dir))[1]
         key = self.config.NAME.lower()
-        dir_names = [f for f in dir_names if f.startswith(key)]
+        dir_names = filter(lambda f: f.startswith(key), dir_names)
         dir_names = sorted(dir_names)
         if not dir_names:
             return None, None
@@ -2067,7 +2062,7 @@ class MaskRCNN():
         dir_name = os.path.join(self.model_dir, dir_names[-1])
         # Find the last checkpoint
         checkpoints = next(os.walk(dir_name))[2]
-        checkpoints = [f for f in checkpoints if f.startswith("mask_rcnn")]
+        checkpoints = filter(lambda f: f.startswith("mask_rcnn"), checkpoints)
         checkpoints = sorted(checkpoints)
         if not checkpoints:
             return dir_name, None
@@ -2100,7 +2095,7 @@ class MaskRCNN():
 
         # Exclude some layers
         if exclude:
-            layers = [l for l in layers if l.name not in exclude]
+            layers = filter(lambda l: l.name not in exclude, layers)
 
         if by_name:
             topology.load_weights_from_hdf5_group_by_name(f, layers)
@@ -2192,7 +2187,7 @@ class MaskRCNN():
         for layer in layers:
             # Is the layer a model?
             if layer.__class__.__name__ == 'Model':
-                print(("In model: ", layer.name))
+                print("In model: ", layer.name)
                 self.set_trainable(
                     layer_regex, keras_model=layer, indent=indent + 4)
                 continue
@@ -2289,7 +2284,7 @@ class MaskRCNN():
             # All layers
             "all": ".*",
         }
-        if layers in list(layer_regex.keys()):
+        if layers in layer_regex.keys():
             layers = layer_regex[layers]
 
         # Data generators
@@ -2647,7 +2642,7 @@ class MaskRCNN():
 
         # Organize desired outputs into an ordered dict
         outputs = OrderedDict(outputs)
-        for o in list(outputs.values()):
+        for o in outputs.values():
             assert o is not None
 
         # Build a Keras function to run parts of the computation graph
@@ -2676,8 +2671,8 @@ class MaskRCNN():
 
         # Pack the generated Numpy arrays into a a dict and log the results.
         outputs_np = OrderedDict([(k, v)
-                                  for k, v in zip(list(outputs.keys()), outputs_np)])
-        for k, v in list(outputs_np.items()):
+                                  for k, v in zip(outputs.keys(), outputs_np)])
+        for k, v in outputs_np.items():
             log(k, v)
         return outputs_np
 

@@ -17,7 +17,7 @@
 
 import inspect
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 from tensorflow.python.training import moving_averages
 
 __all__ = ['batch_norm']
@@ -40,7 +40,7 @@ def batch_norm(
 
     if param_initializers is not None:
 
-        for key, initializer in list(param_initializers.items()):
+        for key, initializer in param_initializers.items():
 
             if key not in ['beta', 'gamma', 'moving_mean', 'moving_variance']:
                 raise ValueError("Unknown key received: `%s`" % key)

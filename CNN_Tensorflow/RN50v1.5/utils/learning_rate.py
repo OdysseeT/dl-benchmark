@@ -17,7 +17,7 @@
 # limitations under the License.
 # ==============================================================================
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 from dllogger.logger import LOGGER
 
 __all__ = ['learning_rate_scheduler']

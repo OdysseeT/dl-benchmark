@@ -14,12 +14,12 @@
 # ==============================================================================
 
 """Utility functions specifically for NMT."""
-
+from __future__ import print_function
 
 import codecs
 import time
 import numpy as np
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 from ..utils import evaluation_utils
 from ..utils import misc_utils as utils

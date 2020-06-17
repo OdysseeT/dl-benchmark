@@ -120,10 +120,10 @@ class JsonBackend(object):
     def register_metric(self, key, metric_scope):
         if (metric_scope == TRAIN_ITER_SCOPE and 
                 self.logging_scope == TRAIN_ITER_SCOPE):
-            if not key in list(self.json_log['iter'].keys()):
+            if not key in self.json_log['iter'].keys():
                 self.json_log['iter'][key] = [[]]
         if metric_scope == EPOCH_SCOPE:
-            if not key in list(self.json_log['epoch'].keys()):
+            if not key in self.json_log['epoch'].keys():
                 self.json_log['epoch'][key] = []
 
     def log(self, key, value):
@@ -138,7 +138,7 @@ class JsonBackend(object):
                     '" not implemented')
     
     def log_event(self, key, value):
-        if not key in list(self.json_log['event'].keys()):
+        if not key in self.json_log['event'].keys():
             self.json_log['event'][key] = []
         entry = OrderedDict()
         entry['epoch'] = _data['epoch']
@@ -151,7 +151,7 @@ class JsonBackend(object):
     def log_iteration_summary(self):
         if (self.logging_scope == TRAIN_ITER_SCOPE and 
                 _data['total_iteration'] % self.iteration_interval == 0):
-            for key, m in list(_data['metrics'].items()):
+            for key, m in _data['metrics'].items():
                 if m.metric_scope == TRAIN_ITER_SCOPE:
                     self.json_log['iter'][key][-1].append(m.get_last())
 
@@ -161,13 +161,13 @@ class JsonBackend(object):
 
     def dump_json(self):
         if self.log_file is None:
-            print((json.dumps(self.json_log, indent=4)))
+            print(json.dumps(self.json_log, indent=4))
         else:
             with open(self.log_file, 'w') as f:
                 json.dump(self.json_log, fp=f, indent=4)
 
     def log_epoch_summary(self):
-        for key, m in list(_data['metrics'].items()):
+        for key, m in _data['metrics'].items():
             if m.metric_scope == EPOCH_SCOPE:
                 self.json_log['epoch'][key].append(m.get_value())
             elif (m.metric_scope == TRAIN_ITER_SCOPE and 
@@ -295,7 +295,7 @@ class JoCBackend(_ParentStdOutBackend):
                 iteration_interval=iteration_interval)
     
     def finish(self):
-        for k in list(_data['metrics'].keys()):
+        for k in _data['metrics'].keys():
             if isinstance(_data['metrics'][k], AverageMeter):
                 super(JoCBackend, self).log('Average '+ k, _data['metrics'][k].get_value())
         
@@ -325,7 +325,7 @@ class _Logger(object):
 
     def log(self, key, value=None, forced=False):
         if _data['current_scope'] == TRAIN_ITER_SCOPE or _data['current_scope'] == EPOCH_SCOPE:
-            if key in list(_data['metrics'].keys()):
+            if key in _data['metrics'].keys():
                 if _data['metrics'][key].metric_scope == _data['current_scope']:
                     _data['metrics'][key].record(value)
         for b in self.backends:
@@ -367,7 +367,7 @@ class _Logger(object):
         _data['epoch'] += 1
         _data['iteration'] = -1
 
-        for n, m in list(_data['metrics'].items()):
+        for n, m in _data['metrics'].items():
             if m.metric_scope == TRAIN_ITER_SCOPE:
                 m.reset()
 

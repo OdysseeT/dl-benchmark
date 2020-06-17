@@ -1,0 +1,10 @@
+.git
+results
+DSSD
+NMT/dataset
+NMT/ende_gnmt_model_4_layer
+NCF/Data
+NCF/ckpt*
+Mask_RCNN/images
+Mask_RCNN/coco_dataset
+*.ipynb

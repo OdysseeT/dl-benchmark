@@ -15,13 +15,13 @@
 
 """Utility to handle vocabularies."""
 
-
-
-
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 import codecs
 import os
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 from tensorflow.python.ops import lookup_ops
 

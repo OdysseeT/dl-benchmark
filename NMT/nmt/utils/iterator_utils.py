@@ -13,11 +13,11 @@
 # limitations under the License.
 # ==============================================================================
 """For loading data into NMT models."""
-
+from __future__ import print_function
 
 import collections
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 from ..utils import vocab_utils
 

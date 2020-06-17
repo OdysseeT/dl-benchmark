@@ -37,15 +37,15 @@ def auto_download(dataDir, dataType, dataYear):
     # Download images if not available locally
     if not os.path.exists(imgDir):
         os.makedirs(imgDir)
-        print(("Downloading images to " + imgZipFile + " ..."))
+        print("Downloading images to " + imgZipFile + " ...")
         with urllib.request.urlopen(imgURL) as resp, open(imgZipFile, 'wb') as out:
             shutil.copyfileobj(resp, out)
         print("... done downloading.")
-        print(("Unzipping " + imgZipFile))
+        print("Unzipping " + imgZipFile)
         with zipfile.ZipFile(imgZipFile, "r") as zip_ref:
             zip_ref.extractall(dataDir)
         print("... done unzipping")
-    print(("Will use images in " + imgDir))
+    print("Will use images in " + imgDir)
 
     # Setup annotations data paths
     annDir = "{}/annotations".format(dataDir)
@@ -71,15 +71,15 @@ def auto_download(dataDir, dataType, dataYear):
         os.makedirs(annDir)
     if not os.path.exists(annFile):
         if not os.path.exists(annZipFile):
-            print(("Downloading zipped annotations to " + annZipFile + " ..."))
+            print("Downloading zipped annotations to " + annZipFile + " ...")
             with urllib.request.urlopen(annURL) as resp, open(annZipFile, 'wb') as out:
                 shutil.copyfileobj(resp, out)
             print("... done downloading.")
-        print(("Unzipping " + annZipFile))
+        print("Unzipping " + annZipFile)
         with zipfile.ZipFile(annZipFile, "r") as zip_ref:
             zip_ref.extractall(unZipDir)
         print("... done unzipping")
-    print(("Will use annotations in " + annFile))
+    print("Will use annotations in " + annFile)
 
 def main():
     auto_download("./coco_dataset", "train", "2014")

@@ -14,7 +14,7 @@
 # ==============================================================================
 
 """Generally useful utility functions."""
-
+from __future__ import print_function
 
 import codecs
 import collections
@@ -26,7 +26,7 @@ import time
 from distutils import version
 
 import numpy as np
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 
 def check_tensorflow_version():
@@ -76,7 +76,7 @@ def print_out(s, f=None, new_line=True):
 def print_hparams(hparams, skip_patterns=None, header=None):
   """Print hparams, can skip keys based on pattern."""
   if header: print_out("%s" % header)
-  values = list(hparams.values())
+  values = hparams.values()
   for key in sorted(values.keys()):
     if not skip_patterns or all(
         [skip_pattern not in key for skip_pattern in skip_patterns]):
@@ -177,5 +177,5 @@ def format_bpe_text(symbols, delimiter=b"@@"):
 
 def format_spm_text(symbols):
   """Decode a text in SPM (https://github.com/google/sentencepiece) format."""
-  return "".join(format_text(symbols).decode("utf-8").split()).replace(
-      "\u2581", " ").strip().encode("utf-8")
+  return u"".join(format_text(symbols).decode("utf-8").split()).replace(
+      u"\u2581", u" ").strip().encode("utf-8")

@@ -18,7 +18,7 @@
 import time
 
 import numpy as np
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 __all__ = ['PrefillStagingAreasHook']
 

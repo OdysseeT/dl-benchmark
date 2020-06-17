@@ -12,10 +12,22 @@ else
 	echo "CNN_Tensorflow/results_train/results.csv does not exist, check if test is ran successfully"
 fi
 
+if [ -f CNN_Tensorflow/results_infer/results.csv ]; then
+	cp CNN_Tensorflow/results_infer/results.csv results/results_cnn_infer.csv
+else
+	echo "CNN_Tensorflow/results_infer/results.csv does not exist, check if test is ran successfully"
+fi
+
 if [ -d CNN_Tensorflow/results_train ]; then
 	cp -r CNN_Tensorflow/results_train results/results_cnn_train
 else
 	echo "CNN_Tensorflow/results_train does not exist, check if test is ran successfully"
+fi
+
+if [ -d CNN_Tensorflow/results_infer ]; then
+	cp -r CNN_Tensorflow/results_infer results/results_cnn_infer
+else
+	echo "CNN_Tensorflow/results_infer does not exist, check if test is ran successfully"
 fi
 
 ### DeepInterest ###
@@ -23,6 +35,12 @@ if [ -f DeepInterest/results/results_train.csv ]; then
 	cp DeepInterest/results/results_train.csv results/results_deepinterest_train.csv
 else
 	echo "DeepInterest/results/results_train.csv does not exist, check if test is ran successfully"
+fi
+
+if [ -f DeepInterest/results/results_infer.csv ]; then
+	cp DeepInterest/results/results_infer.csv results/results_deepinterest_infer.csv
+else
+	echo "DeepInterest/results/results_infer.csv does not exist, check if test is ran successfully"
 fi
 
 if [ -d DeepInterest/results ]; then
@@ -38,6 +56,12 @@ else
 	echo "Mask_RCNN/results/results_train.csv does not exist, check if test is ran successfully"
 fi
 
+if [ -f Mask_RCNN/results/results_infer.csv ]; then
+	cp Mask_RCNN/results/results_infer.csv results/results_maskrcnn_infer.csv
+else
+	echo "Mask_RCNN/results/results_infer.csv does not exist, check if test is ran successfully"
+fi
+
 if [ -d Mask_RCNN/results ]; then
 	cp -r Mask_RCNN/results results/results_maskrcnn
 else
@@ -51,10 +75,54 @@ else
 	echo "NMT/results/results_train.csv does not exist, check if test is ran successfully"
 fi
 
+if [ -f NMT/results/results_infer.csv ]; then
+	cp NMT/results/results_infer.csv results/results_nmt_infer.csv
+else
+	echo "NMT/results/results_infer.csv does not exist, check if test is ran successfully"
+fi
+
 if [ -d NMT/results ]; then
 	cp -r NMT/results results/results_nmt
 else
 	echo "NMT/results does not exist, check if test is ran successfully"
+fi
+
+# ### SSD_VGG16_Caffe ###
+# if [ -f SSD_VGG16_Caffe/results/results_train.csv ]; then
+# 	cp SSD_VGG16_Caffe/results/results_train.csv results/results_ssd_vgg16_train.csv
+# else
+# 	echo "SSD_VGG16_Caffe/results/results_train.csv does not exist, check if test is ran successfully"
+# fi
+
+# if [ -f SSD_VGG16_Caffe/results/results_infer.csv ]; then
+# 	cp SSD_VGG16_Caffe/results/results_infer.csv results/results_ssd_vgg16_infer.csv
+# else
+# 	echo "SSD_VGG16_Caffe/results/results_infer.csv does not exist, check if test is ran successfully"
+# fi
+
+# if [ -d SSD_VGG16_Caffe/results ]; then
+# 	cp -r SSD_VGG16_Caffe/results results/results_ssd_vgg16
+# else
+# 	echo "SSD_VGG16_Caffe/results does not exist, check if test is ran successfully"
+# fi
+
+### SSD_ResNet34_PyTorch ###
+if [ -f SSD_ResNet34_PyTorch/results/results_train.csv ]; then
+	cp SSD_ResNet34_PyTorch/results/results_train.csv results/results_ssd_resnet34_train.csv
+else
+	echo "SSD_ResNet34_PyTorch/results/results_train.csv does not exist, check if test is ran successfully"
+fi
+
+# if [ -f SSD_ResNet34_PyTorch/results/results_infer.csv ]; then
+# 	cp SSD_ResNet34_PyTorch/results/results_infer.csv results/results_ssd_resnet34_infer.csv
+# else
+# 	echo "SSD_ResNet34_PyTorch/results/results_infer.csv does not exist, check if test is ran successfully"
+# fi
+
+if [ -d SSD_ResNet34_PyTorch/results ]; then
+	cp -r SSD_ResNet34_PyTorch/results results/results_ssd_resnet34
+else
+	echo "SSD_ResNet34_PyTorch/results does not exist, check if test is ran successfully"
 fi
 
 ### SSD_ResNet18_Caffe ###

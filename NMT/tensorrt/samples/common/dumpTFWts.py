@@ -7,7 +7,7 @@ import sys
 import struct
 import argparse
 try:
-    import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+    import tensorflow as tf
     from tensorflow.python import pywrap_tensorflow
 except ImportError as err:
     sys.stderr.write("""Error: Failed to import module ({})""".format(err))
@@ -22,13 +22,13 @@ parser.add_argument('-1', '--wtsv1', required=False, default=False, type=bool, h
 opt = parser.parse_args()
 
 if opt.wtsv1:
-    print("Outputting the trained weights in TensorRT's wts v1 format. This format is documented as:")
-    print("Line 0: <number of buffers in the file>")
-    print("Line 1-Num: [buffer name] [buffer type] [buffer size] <hex values>")
+    print "Outputting the trained weights in TensorRT's wts v1 format. This format is documented as:"
+    print "Line 0: <number of buffers in the file>"
+    print "Line 1-Num: [buffer name] [buffer type] [buffer size] <hex values>"
 else:
-    print("Outputting the trained weights in TensorRT's wts v2 format. This format is documented as:")
-    print("Line 0: <number of buffers in the file>")
-    print("Line 1-Num: [buffer name] [buffer type] [(buffer shape{e.g. (1, 2, 3)}] <buffer shaped size bytes of data>")
+    print "Outputting the trained weights in TensorRT's wts v2 format. This format is documented as:"
+    print "Line 0: <number of buffers in the file>"
+    print "Line 1-Num: [buffer name] [buffer type] [(buffer shape{e.g. (1, 2, 3)}] <buffer shaped size bytes of data>"
 
 inputbase = opt.model
 outputbase = opt.output
@@ -45,7 +45,7 @@ def getTRTType(tensor):
         return 2
     if tf.as_dtype(tensor.dtype) == tf.int32:
         return 3
-    print(("Tensor data type of %s is not supported in TensorRT"%(tensor.dtype)))
+    print("Tensor data type of %s is not supported in TensorRT"%(tensor.dtype))
     sys.exit();
 
 try:
@@ -74,7 +74,7 @@ try:
         val = tensor.shape
         if opt.wtsv1:
             val = tensor.size
-        print(("%s %s %s "%(file_key, typeOfElem, val)))
+        print("%s %s %s "%(file_key, typeOfElem, val))
         flat_tensor = tensor.flatten()
         outputFile.write("%s 0 %s "%(file_key, val))
         if opt.wtsv1:
@@ -87,7 +87,7 @@ try:
     outputFile.close()
 
 except Exception as e:  # pylint: disable=broad-except
-    print((str(e)))
+    print(str(e))
     if "corrupted compressed block contents" in str(e):
         print("It's likely that your checkpoint file has been compressed "
                 "with SNAPPY.")
@@ -98,4 +98,4 @@ except Exception as e:  # pylint: disable=broad-except
            It's likely that this is a V2 checkpoint and you need to provide the filename
            *prefix*.  Try removing the '.' and extension.  Try:
            inspect checkpoint --file_name = {}"""
-            print((v2_file_error_template.format(proposed_file)))
+            print(v2_file_error_template.format(proposed_file))

@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import os.path
 import argparse
 
 def is_number(s):
@@ -25,8 +26,8 @@ def process_infer_trt(pc):
     models = ['googlenet','resnet50','resnet152', 'densenet121']
     bs = ['16', '32', '64']
     #pc = ['fp32', 'fp16']
-   
-    folder_path = "./results_infer_trt_" + pc +"/" 
+
+    folder_path = "./results_infer_trt_" + pc +"/"
     for md in models:
         row_table0 = [md]
         row_table1 = [md]
@@ -36,7 +37,7 @@ def process_infer_trt(pc):
                 val = 0
                 for line in ins:
                     if not line.strip():
-                        continue             
+                        continue
                     if (line.split(' ')[0]== '' and  line.split(' ')[-2]=='images/sec:' and  is_number(line.split(' ')[-1])):
                         #print('=======', line)
                         val = line.split()[-1]
@@ -79,7 +80,7 @@ def process_infer():
 
     models = ['googlenet','resnet50','resnet152', 'densenet121']
     bs = ['16', '32', '64']
-    
+
     for md in models:
         row_table0 = [md]
         row_table1 = [md]
@@ -90,7 +91,7 @@ def process_infer():
                 flag = False
                 for line in ins:
                     if not line.strip():
-                        continue             
+                        continue
                     if (line.split(' ')[0]== '' and len(line.split())==4 and is_number(line.split(' ')[-1])):
                         val = line.split()[-1]
                         val = float(val)
@@ -137,17 +138,19 @@ def process_train():
 
     models = ['googlenet','resnet50','resnet152', 'densenet121', 'synNet']
     bs = ['16', '32', '64']
-    
+
     for md in models:
         row_table0 = [md]
         row_table1 = [md]
         for b in bs:
             fname = "./results_train/result_" + md + '_' + b + '.txt'
+            if not os.path.isfile(fname) :
+                continue
             with open(fname, "r") as ins:
                 flag = False
                 for line in ins:
                     if not line.strip():
-                        continue             
+                        continue
                     if ( line.split()[0]== 'Images/sec:' and  is_number(line.split()[1] )):
                         val = line.split()[1]
                         val = float(val)
@@ -161,7 +164,7 @@ def process_train():
                     print("Missing result, check if test is finished!")
         table0.append(row_table0)
         table1.append(row_table1)
-    
+
     # write results to file
     fname = './results_train/results.csv'
     with open(fname, "w") as outfile:
@@ -176,7 +179,7 @@ def process_train():
             for entry in line:
                 outfile.write(str(entry)+",")
             outfile.write("\n")
-                   
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--compare", help="compare card type" )
@@ -199,14 +202,14 @@ def main():
     if args.compare is not None:
         if args.compare == 'P4':
             df_card = pd.read_csv('./results_p4/results.csv')
-            df['fp32 speedup'] = df['fp32'] / df_card['fp32'] 
+            df['fp32 speedup'] = df['fp32'] / df_card['fp32']
         if args.compare == 'V100':
             df_card = pd.read_csv('./results_v100/results.csv')
-            df['fp32 speedup'] = df['fp32'] / df_card['fp32'] 
-    
+            df['fp32 speedup'] = df['fp32'] / df_card['fp32']
+
     #print(df)
     if args.compare is not None:
-        print(('Total speedup on all the models of fp32: ', df['fp32 speedup'].mean()))
+        print('Total speedup on all the models of fp32: ', df['fp32 speedup'].mean())
 
 if __name__ == '__main__':
     main()

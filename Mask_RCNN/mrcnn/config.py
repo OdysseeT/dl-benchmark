@@ -7,9 +7,6 @@ Licensed under the MIT License (see LICENSE for details)
 Written by Waleed Abdulla
 """
 
-import warnings
-warnings.simplefilter(action='ignore', category=FutureWarning)
-
 import math
 import numpy as np
 
@@ -213,5 +210,5 @@ class Config(object):
         print("\nConfigurations:")
         for a in dir(self):
             if not a.startswith("__") and not callable(getattr(self, a)):
-                print(("{:30} {}".format(a, getattr(self, a))))
+                print("{:30} {}".format(a, getattr(self, a)))
         print("\n")

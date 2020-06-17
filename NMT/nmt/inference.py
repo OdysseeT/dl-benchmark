@@ -14,12 +14,12 @@
 # ==============================================================================
 
 """To perform inference on test set given a trained model."""
-
+from __future__ import print_function
 
 import codecs
 import time
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 from . import attention_model
 from . import gnmt_model

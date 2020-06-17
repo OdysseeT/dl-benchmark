@@ -17,7 +17,7 @@
 # ==============================================================================
 
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 import model.layers
 import model.blocks 

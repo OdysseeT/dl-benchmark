@@ -19,14 +19,14 @@ def main():
     V100_time = [40.2, 73.6, 136.7]
  
     print ('Speedup vs P4,   batch size    ')
-    print(('%0.2f,           %0.0f' % (P4_time[0]/ptime[0], 4)))
-    print(('%0.2f,           %0.0f' % (P4_time[1]/ptime[1], 8)))
-    print(('%0.2f,           %0.0f' % (P4_time[2]/ptime[2], 16)))
+    print ('%0.2f,           %0.0f' % (P4_time[0]/ptime[0], 4))
+    print ('%0.2f,           %0.0f' % (P4_time[1]/ptime[1], 8))
+    print ('%0.2f,           %0.0f' % (P4_time[2]/ptime[2], 16))
     
     print ('Speedup vs V100, batch size    ')
-    print(('%0.2f,           %0.0f' % (V100_time[0]/ptime[0], 4)))
-    print(('%0.2f,           %0.0f' % (V100_time[1]/ptime[1], 8)))
-    print(('%0.2f,           %0.0f' % (V100_time[2]/ptime[2], 16)))
+    print ('%0.2f,           %0.0f' % (V100_time[0]/ptime[0], 4))
+    print ('%0.2f,           %0.0f' % (V100_time[1]/ptime[1], 8))
+    print ('%0.2f,           %0.0f' % (V100_time[2]/ptime[2], 16))
 
 if __name__ == '__main__':
     main()

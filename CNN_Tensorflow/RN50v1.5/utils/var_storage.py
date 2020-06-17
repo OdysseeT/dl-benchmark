@@ -17,7 +17,7 @@
 # limitations under the License.
 # ==============================================================================
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 __all__ = ['model_variable_scope']
 

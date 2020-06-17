@@ -10,7 +10,7 @@ mkdir results
 
 cd samples/coco
 start=`date +%s%N`
-python3 coco.py train --dataset=../../../dataset/COCO2017 --year=2017 --model=../../mask_rcnn_coco.h5 --num_accelerators=$NUM_ACCELERATORS |& tee ../../results/result_train.txt
+python3 coco.py train --dataset=../../coco_dataset --year=2014 --model=../../mask_rcnn_coco.h5 --num_accelerators=$NUM_ACCELERATORS |& tee ../../results/result_train.txt
 end=`date +%s%N`
 total_time=$(((end-start)/1000000))
 total_images=3000*2*$NUM_ACCELERATORS

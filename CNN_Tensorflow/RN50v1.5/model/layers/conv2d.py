@@ -15,7 +15,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import tensorflow as tf;tf.get_logger().setLevel('ERROR')
+import tensorflow as tf
 
 __all__ = ['conv2d']
 
