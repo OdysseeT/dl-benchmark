@@ -1,3 +1,4 @@
+.build_release
 *.so
 *.ipynb
 log_*
@@ -11,3 +12,7 @@ NCF/Data/
 NCF/graphs/
 DSSD/protobuf*
 *.caffemodel
+DSSD/VOC0712/
+DSSD/build
+DSSD/include/caffe/proto/
+DSSD/python/caffe/proto/

@@ -35,12 +35,12 @@ cd NMT
 ./prepare_dataset.sh
 cd ..
 
-#echo "##########################################"
-#echo "###        DSSD                        ###"
-#echo "##########################################"
-#cd DSSD
-#./prepare_dataset.sh
-#cd ..
+echo "##########################################"
+echo "###        DSSD                        ###"
+echo "##########################################"
+cd DSSD
+./prepare_dataset.sh
+cd ..
 
 # echo "##########################################"
 # echo "###        SSD_VGG16_Caffe             ###"
@@ -49,12 +49,12 @@ cd ..
 # ./prepare_dataset.sh
 # cd ..
 
-echo "##########################################"
-echo "###        SSD_ResNet18_Caffe          ###"
-echo "##########################################"
-cd SSD_ResNet18_Caffe
-./prepare_dataset.sh
-cd ..
+#echo "##########################################"
+#echo "###        SSD_ResNet18_Caffe          ###"
+#echo "##########################################"
+#cd SSD_ResNet18_Caffe
+#./prepare_dataset.sh
+#cd ..
 
 #echo "##########################################"
 #echo "###        DIEN                        ###"

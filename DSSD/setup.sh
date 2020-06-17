@@ -11,9 +11,9 @@ if [ ! -f /usr/local/lib/libprotobuf.so.9 ]; then
 	apt-get install build-essential
 	cd protobuf-2.6.1
 	./configure
-	make
-	make check
-	make install
+	make -j
+	make check -j
+	make install -j
 	cd ..
 fi
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
@@ -23,7 +23,7 @@ mkdir include/caffe/proto
 mv src/caffe/proto/caffe.pb.h include/caffe/proto
 
 make clean
-make
+make -j
 make py
 #make test -j64
 #make runtest -j64
