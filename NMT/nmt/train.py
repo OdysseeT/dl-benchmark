@@ -17,10 +17,12 @@ from __future__ import print_function
 
 import math
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import random
 import time
 
 import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 from . import attention_model
 from . import gnmt_model

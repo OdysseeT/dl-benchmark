@@ -8,7 +8,7 @@ if [ -d results ]; then
 fi
 mkdir results
 
-batchs='64 128 256'
+batchs='16 32 64 128 256'
 
 for batch in $batchs
 do
@@ -25,7 +25,7 @@ do
         --train_prefix=dataset/wmt16_de_en/train.tok.clean.bpe.32000 \
         --dev_prefix=dataset/wmt16_de_en/newstest2013.tok.bpe.32000 \
         --test_prefix=dataset/wmt16_de_en/newstest2015.tok.bpe.32000 \
-        --num_train_steps=2000 \
+        --num_train_steps=300 \
         --steps_per_stats=100 \
         --batch_size=$batch \
         --num_gpus=$NUM_ACCELERATORS \

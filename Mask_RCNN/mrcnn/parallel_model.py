@@ -13,7 +13,11 @@ https://github.com/avolkov1/keras_experiments/blob/master/keras_exp/multigpu/
 https://github.com/fchollet/keras/blob/master/keras/utils/training_utils.py
 """
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 import keras.backend as K
 import keras.layers as KL
 import keras.models as KM

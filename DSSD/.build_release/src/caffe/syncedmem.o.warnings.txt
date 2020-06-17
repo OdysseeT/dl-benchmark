@@ -1,0 +1,6 @@
+In file included from ./include/caffe/util/math_functions.hpp:11:0,
+                 from src/caffe/syncedmem.cpp:3:
+./include/caffe/util/mkl_alternate.hpp:14:10: fatal error: cblas.h: No such file or directory
+ #include <cblas.h>
+          ^~~~~~~~~
+compilation terminated.

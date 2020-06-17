@@ -22,7 +22,11 @@ import abc
 import collections
 import numpy as np
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 from . import model_helper
 from .utils import iterator_utils

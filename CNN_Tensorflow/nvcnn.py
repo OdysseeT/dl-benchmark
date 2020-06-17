@@ -1583,7 +1583,9 @@ def run_evaluation(nstep, sess, top1_op, top5_op, enqueue_ops, logit, total_batc
     print('-' * 64)
 
 def get_num_records(data_dir):
-    validation_files = tf.gfile.Glob(os.path.join(data_dir, 'validation*'))
+    print(os.path.join(data_dir, '*.jpg'))
+    validation_files = tf.gfile.Glob(os.path.join(data_dir, '*.jpg'))
+    #validation_files = tf.gfile.Glob(os.path.join(data_dir, 'validation*'))
     num_records = 0
     for fn in validation_files:
         for record in tf.python_io.tf_record_iterator(fn):

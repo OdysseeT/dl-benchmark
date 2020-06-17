@@ -15,15 +15,19 @@
 
 """TensorFlow NMT model implementation."""
 from __future__ import print_function
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 import argparse
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import random
 import sys
 
 # import matplotlib.image as mpimg
 import numpy as np
 import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 from . import inference
 from . import train

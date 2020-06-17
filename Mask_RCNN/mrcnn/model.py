@@ -8,6 +8,7 @@ Written by Waleed Abdulla
 """
 
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import random
 import datetime
 import re
@@ -18,6 +19,7 @@ import multiprocessing
 import numpy as np
 import skimage.transform
 import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 import keras
 import keras.backend as K
 import keras.layers as KL
@@ -71,7 +73,7 @@ class BatchNorm(KL.BatchNormalization):
 
 def compute_backbone_shapes(config, image_shape):
     """Computes the width and height of each stage of the backbone network.
-    
+
     Returns:
         [N, (height, width)]. Where N is the number of stages
     """
@@ -802,7 +804,7 @@ class DetectionLayer(KE.Layer):
         m = parse_image_meta_graph(image_meta)
         image_shape = m['image_shape'][0]
         window = norm_boxes_graph(m['window'], image_shape[:2])
-        
+
         # Run detection refinement graph on each item in the batch
         detections_batch = utils.batch_slice(
             [rois, mrcnn_class, mrcnn_bbox, window],
@@ -2019,7 +2021,7 @@ class MaskRCNN():
                                      train_bn=config.TRAIN_BN)
 
             # Detections
-            # output is [batch, num_detections, (y1, x1, y2, x2, class_id, score)] in 
+            # output is [batch, num_detections, (y1, x1, y2, x2, class_id, score)] in
             # normalized coordinates
             detections = DetectionLayer(config, name="mrcnn_detection")(
                 [rpn_rois, mrcnn_class, mrcnn_bbox, input_image_meta])

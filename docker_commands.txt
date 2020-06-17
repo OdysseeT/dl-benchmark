@@ -1,0 +1,10 @@
+
+sudo docker build -f Dockerfile.tensorflow -t odyssee/ai-matrix:latest .
+
+
+sudo docker run --gpus all --privileged=true --network=host --ipc=host -v $(pwd):/workspace -it odyssee/ai-matrix:latest bash
+
+
+
+
+docker run -it -v /home/begood/Downloads/ILSVRC2012_img_val:/datasets tensorflow/tensorflow:nightly-gpu bash
