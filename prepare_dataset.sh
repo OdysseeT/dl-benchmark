@@ -7,12 +7,12 @@ cd pretrained_models
 ./download_models.sh
 cd ..
 
-echo "##########################################"
-echo "###        Download dataset            ###"
-echo "##########################################"
-cd dataset
-./prepare_dataset.sh
-cd ..
+#echo "##########################################"
+#echo "###        Download dataset            ###"
+#echo "##########################################"
+#cd dataset
+#./prepare_dataset.sh
+#cd ..
 
 #echo "##########################################"
 #echo "###        DeepInterest                ###"
