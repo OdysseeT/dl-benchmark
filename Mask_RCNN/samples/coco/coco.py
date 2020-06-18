@@ -26,6 +26,9 @@ Usage: import the module (see Jupyter notebooks for examples), or run from
     # Run COCO evaluatoin on the last model you trained
     python3 coco.py evaluate --dataset=/path/to/coco/ --model=last
 """
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.simplefilter("ignore", UserWarning)
 
 import os
 import sys
@@ -76,6 +79,8 @@ class CocoConfig(Config):
     # Give the configuration a recognizable name
     NAME = "coco"
 
+    GPU_COUNT = 1
+
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
     IMAGES_PER_GPU = 2
@@ -86,6 +91,8 @@ class CocoConfig(Config):
     # Number of classes (including background)
     NUM_CLASSES = 1 + 80  # COCO has 80 classes
 
+    STEPS_PER_EPOCH = 100
+    VALIDATION_STEPS = 20
 
 ############################################################
 #  Dataset

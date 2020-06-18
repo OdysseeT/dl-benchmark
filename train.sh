@@ -7,7 +7,7 @@ echo "##########################################"
 echo "### Running CNN_Tensorflow             ###"
 echo "##########################################"
 cd CNN_Tensorflow
-./train-all.sh
+./train.sh
 cd ..
 
 #echo "##########################################"
@@ -45,19 +45,19 @@ cd ..
 #./train.sh
 #cd ..
 
-echo "##########################################"
-echo "### Running SSD_ResNet18_Caffe         ###"
-echo "##########################################"
-cd SSD_ResNet18_Caffe
-./train.sh
-cd ..
-
 #echo "##########################################"
-#echo "### Running DSSD                       ###"
+#echo "### Running SSD_ResNet18_Caffe         ###"
 #echo "##########################################"
-#cd DSSD
+#cd SSD_ResNet18_Caffe
 #./train.sh
 #cd ..
+
+echo "##########################################"
+echo "### Running DSSD                       ###"
+echo "##########################################"
+cd DSSD
+./train.sh
+cd ..
 
 echo "##########################################"
 echo "### Running NCF                        ###"

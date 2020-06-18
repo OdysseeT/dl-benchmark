@@ -3,7 +3,7 @@
 #models='googlenet resnet50 resnet152 densenet121 synNet'
 models='resnet50'
 batchs='8 16 32 64 128'
-num_batches=500
+num_batches=300
 NUM_ACCELERATORS=${NUM_ACCELERATORS:-1}
 echo "NUM_ACCELERATORS=${NUM_ACCELERATORS}"
 
